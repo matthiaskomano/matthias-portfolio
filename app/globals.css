@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  /* Light mode defaults */
+  :root {
+    --background: #ffffff;
+    --foreground: #0A0A0A;
+    --card: #f4f4f5;
+    --primary: #2563EB;
+    --secondary: #7C3AED;
+    --accent: #06B6D4;
+    --muted: #71717a;
+    --border: #e4e4e7;
+  }
+
+  /* Dark mode overrides (controlled by next-themes) */
+  .dark {
+    --background: #0A0A0A;
+    --foreground: #FFFFFF;
+    --card: #111111;
+    --primary: #2563EB;
+    --secondary: #7C3AED;
+    --accent: #06B6D4;
+    --muted: #A1A1AA;
+    --border: #27272A;
+  }
 }
 
+/* Map our CSS variables to Tailwind v4 theme */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    @apply antialiased selection:bg-primary selection:text-white transition-colors duration-300;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Our custom premium UI utilities */
+@layer utilities {
+  .glass {
+    @apply bg-card/60 backdrop-blur-md border border-border shadow-lg;
+  }
+  
+  .glass-card {
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    @apply backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl;
+  }
 }
